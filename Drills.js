@@ -40,7 +40,7 @@ function merge(left, right, array) {
   }
   return array;
 }
-console.log(mergeSort(unsortedMergeList));
+//console.log(mergeSort(unsortedMergeList));
 
 //2. Understanding quicksort
 //2a. The pivot could have been either 14 or 17
@@ -49,9 +49,55 @@ console.log(mergeSort(unsortedMergeList));
 //Last item as pivot: 10, 3, 13, 15, 19, 14, 17, 16, 9, 12
 
 //3. Implementing quicksort
+const dataset = [89, 30, 25, 32, 72, 70, 51, 42, 25, 24, 53, 55, 78, 50, 13, 40, 48, 32, 26, 2, 14, 33, 45, 72, 56, 44, 21, 88, 27, 68, 15, 62, 93, 98, 73, 28, 16, 46, 87, 28, 65, 38, 67, 16, 85, 63, 23, 69, 64, 91, 9, 70, 81, 27, 97, 82, 6, 88, 3, 7, 46, 13, 11, 64, 76, 31, 26, 38, 28, 13, 17, 69, 90, 1, 6, 7, 64, 43, 9, 73, 80, 98, 46, 27, 22, 87, 49, 83, 6, 39, 42, 51, 54, 84, 34, 53, 78, 40, 14, 5];
+
+function qSort(arry, start = 0, end = arry.length) {
+  if(start >= end) {
+    return arry;
+  }
+  const middle = partition(arry, start, end);
+  arry = qSort(arry, start, middle);
+  arry = qSort(arry, middle + 1, end);
+  return arry;
+}
+
+function partition(arry, start, end) {
+  const pivot = arry[end - 1];
+  let j = start;
+  for(let i = start; i < end - 1; i++) {
+    if(arry[i] <= pivot) {
+      swap(arry, i, j);
+      j++;
+    }
+  }
+  swap(arry, end -1, j);
+  return j;
+}
+
+function swap(arry, i, j) {
+  const tmp = arry[i];
+  arry[i] = arry[j];
+  arry[j] = tmp;
+}
+//console.log(qSort(dataset));
 
 //4. Implementing merge sort
-
+function mSort(arry) {
+  if (arry.length <= 1) {
+    return arry;
+  }
+      
+  const middle = Math.floor(arry.length / 2);
+  let left = arry.slice(0, middle);
+  let right = arry.slice(middle, arry.length);
+  console.log('left is ', left);
+  console.log('right is ', right);
+      
+  left = mergeSort(left);
+  right = mergeSort(right);
+  return merge(left, right, arry);
+}
+//console.log(mSort(dataset));
 //5. Sorting a linked list using merge sort
 
 //6. Bucket sort
