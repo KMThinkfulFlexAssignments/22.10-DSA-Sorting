@@ -1,4 +1,7 @@
 'use strict';
+const LinkedList = require('./LinkedList');
+const _Node = require('./LinkedList');
+
 //1. Understanding merge sort
 const unsortedMergeList = [21, 1, 26, 26, 45, 29, 28, 2, 9, 16, 49, 39];
 
@@ -99,9 +102,72 @@ function mSort(arry) {
 }
 //console.log(mSort(dataset));
 //5. Sorting a linked list using merge sort
+const unsortedLinkedList = new LinkedList();
+
+unsortedLinkedList.insertFirst(1);
+unsortedLinkedList.insertFirst(5);
+unsortedLinkedList.insertFirst(2);
+unsortedLinkedList.insertFirst(4);
+unsortedLinkedList.insertFirst(3);
+
+//console.log(unsortedLinkedList.mergeSort());
 
 //6. Bucket sort
+const unsortedArray = [0, 1, 3, 4, 6, 7, 2, 5, 10, 9];
+function insertionSort(array) {
+  var length = array.length;
+  
+  for(var i = 1; i < length; i++) {
+    var temp = array[i];
+    for(var j = i - 1; j >= 0 && array[j] > temp; j--) {
+      array[j+1] = array[j];
+    }
+    array[j+1] = temp;
+  }
+  
+  return array;
+}
 
+function bucketSort(array, bucketSize) {
+  if(array === 0) {
+    return array;
+  }
+  let i,
+    minValue = array[0],
+    maxValue = array[0];
+
+  array.forEach(value => {
+    if(value < minValue) {
+      minValue = value;
+    } else if(value > maxValue) {
+      maxValue = value;
+    }
+  });
+
+  let bucketCount = Math.floor((maxValue - minValue) / (bucketSize || 5) + 1);
+  let allBuckets = new Array(bucketCount);
+
+  for (i = 0; i < allBuckets.length; i++) {
+    allBuckets[i] = [];
+  }
+
+  array.forEach(value => {
+    allBuckets[Math.floor((value - minValue) / (bucketSize || 5))].push(value);
+  });
+
+  array.length = 0;
+
+  allBuckets.forEach(function(bucket) {
+    insertionSort(bucket);
+    bucket.forEach(function (element) {
+      array.push(element);
+    });
+  });
+  return array;
+}
+
+
+console.log(bucketSort(unsortedArray));
 //7. Sort in place
 
 //8. Sorting books
