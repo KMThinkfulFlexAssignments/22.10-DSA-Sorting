@@ -167,7 +167,29 @@ function bucketSort(array, bucketSize) {
 }
 
 
-console.log(bucketSort(unsortedArray));
+//console.log(bucketSort(unsortedArray));
 //7. Sort in place
+function sortInPlace(array) {
+  for(let i = 0; i < array.length; i++) {
+    let j = Math.floor(Math.random() * array.length);
+    swap(array, i, j);
+  }
+  return array;
+}
+//console.log(sortInPlace(unsortedArray));
 
 //8. Sorting books
+const books = ['Green Eggs and Ham', 'Dictionary', 'War and Peace', 'The Hobbit', 'Don Quixote', 'Ulysses', 'Moby Dick'];
+function sortBooks(array) {
+  if(array.length <= 1) {
+    return array;
+  }
+  const middle = Math.floor(array.length / 2);
+  let left = array.slice(0, middle);
+  let right = array.slice(middle, array.length);
+
+  left = sortBooks(left);
+  right = sortBooks(right);
+  return merge(left, right, array);
+}
+//console.log(sortBooks(books));
